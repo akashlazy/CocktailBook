@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailsScreen: View {
     
     let cocktail: Cocktail
+    @ObservedObject var cocktailVM: CocktailViewModel
     
     var body: some View {
         ScrollView {
@@ -31,14 +32,19 @@ struct DetailsScreen: View {
                 
                 IngredientListView(ingredients: cocktail.ingredients)
             }
-            .navigationBarTitle(cocktail.name)
         }
+        .navigationBarTitle(cocktail.name)
+        .navigationBarItems(trailing: FavoriteButton(isFavorite: cocktailVM.isFavorite(cocktail)) {
+            withAnimation {
+                cocktailVM.toggleFavorite(cocktail)
+            }
+        })
     }
 }
 
 #Preview {
     NavigationView {
-        DetailsScreen(cocktail: sampleCocktail)
+        DetailsScreen(cocktail: sampleCocktail, cocktailVM: CocktailViewModel(api: FakeCocktailsAPI()))
     }
 }
 

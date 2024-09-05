@@ -15,9 +15,16 @@ class CocktailViewModel: ObservableObject {
     private var cocktails: [Cocktail] = []
     @Published var filteredCocktails: [Cocktail] = []
     
+    @Published var favoriteCocktails: [String] = [] {
+        didSet {
+            handleFavoriteChange()
+        }
+    }
+    
     // MARK: - Initializer
     init(api: FakeCocktailsAPI) {
         self.api = api
+        loadFavorites()
     }
     
     // MARK: - API Calls
@@ -50,12 +57,38 @@ class CocktailViewModel: ObservableObject {
         updateCocktailList()
     }
     
+    private func handleFavoriteChange() {
+        saveFavorites()
+        updateCocktailList()
+    }
+    
     private func updateCocktailList() {
         sortCocktailsByName()
     }
     
+    private func saveFavorites() {
+        UserDefaults.standard.set(favoriteCocktails, forKey: "favorites")
+    }
+    
+    private func loadFavorites() {
+        favoriteCocktails = UserDefaults.standard.stringArray(forKey: "favorites") ?? []
+    }
+    
     private func sortCocktailsByName() {
         filteredCocktails.sort { $0.name < $1.name }
+    }
+    
+    // MARK: - Favorites Handling
+    func isFavorite(_ cocktail: Cocktail) -> Bool {
+        return favoriteCocktails.contains(cocktail.id)
+    }
+    
+    func toggleFavorite(_ cocktail: Cocktail) {
+        if isFavorite(cocktail) {
+            favoriteCocktails.removeAll { $0 == cocktail.id }
+        } else {
+            favoriteCocktails.append(cocktail.id)
+        }
     }
 }
 

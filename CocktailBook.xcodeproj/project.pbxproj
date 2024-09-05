@@ -15,6 +15,8 @@
 		636E0C002C89CBAF00A518CC /* IngredientListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0BFF2C89CBAF00A518CC /* IngredientListView.swift */; };
 		636E0C042C89CCBB00A518CC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C032C89CCBB00A518CC /* String+Extension.swift */; };
 		636E0C062C89CCDA00A518CC /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C052C89CCDA00A518CC /* Binding+Extension.swift */; };
+		636E0C092C89D1D000A518CC /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C082C89D1D000A518CC /* FavoriteButton.swift */; };
+		636E0C0B2C89D23300A518CC /* CocktailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C0A2C89D23300A518CC /* CocktailRowView.swift */; };
 		E8324E7A262076EB00FD2124 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8324E79262076EB00FD2124 /* AppDelegate.swift */; };
 		E8324E7C262076EB00FD2124 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8324E7B262076EB00FD2124 /* SceneDelegate.swift */; };
 		E8324E80262076EE00FD2124 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8324E7F262076EE00FD2124 /* Assets.xcassets */; };
@@ -53,6 +55,8 @@
 		636E0BFF2C89CBAF00A518CC /* IngredientListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListView.swift; sourceTree = "<group>"; };
 		636E0C032C89CCBB00A518CC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		636E0C052C89CCDA00A518CC /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
+		636E0C082C89D1D000A518CC /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
+		636E0C0A2C89D23300A518CC /* CocktailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailRowView.swift; sourceTree = "<group>"; };
 		E8324E76262076EB00FD2124 /* CocktailBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocktailBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8324E79262076EB00FD2124 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8324E7B262076EB00FD2124 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,8 +111,8 @@
 		636E0BEF2C89C23E00A518CC /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				636E0C072C89D1AD00A518CC /* MainScreen */,
 				636E0BFC2C89CA7F00A518CC /* DetailsScreen */,
-				636E0BEE2C89C23E00A518CC /* MainScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -158,6 +162,16 @@
 				636E0C052C89CCDA00A518CC /* Binding+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		636E0C072C89D1AD00A518CC /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				636E0BEE2C89C23E00A518CC /* MainScreen.swift */,
+				636E0C082C89D1D000A518CC /* FavoriteButton.swift */,
+				636E0C0A2C89D23300A518CC /* CocktailRowView.swift */,
+			);
+			path = MainScreen;
 			sourceTree = "<group>";
 		};
 		E8324E6D262076EB00FD2124 = {
@@ -353,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				636E0C002C89CBAF00A518CC /* IngredientListView.swift in Sources */,
+				636E0C0B2C89D23300A518CC /* CocktailRowView.swift in Sources */,
 				636E0BF52C89C23E00A518CC /* MainScreen.swift in Sources */,
 				E8324EBF26207B2900FD2124 /* CocktailsAPI.swift in Sources */,
 				E8324ECC26207B9100FD2124 /* FakeCocktailsAPI.swift in Sources */,
@@ -363,6 +378,7 @@
 				636E0BF62C89C23E00A518CC /* CocktailViewModel.swift in Sources */,
 				636E0C062C89CCDA00A518CC /* Binding+Extension.swift in Sources */,
 				E8324E7C262076EB00FD2124 /* SceneDelegate.swift in Sources */,
+				636E0C092C89D1D000A518CC /* FavoriteButton.swift in Sources */,
 				636E0BF32C89C23E00A518CC /* Cocktail.swift in Sources */,
 				636E0BF42C89C23E00A518CC /* DetailsScreen.swift in Sources */,
 			);

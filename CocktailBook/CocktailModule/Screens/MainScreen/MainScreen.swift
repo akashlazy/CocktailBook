@@ -24,17 +24,15 @@ struct MainScreen: View {
                 .padding()
                 
                 List {
-                    ForEach(cocktailVM.filteredCocktails) {  cocktail in
-                        NavigationLink(destination: DetailsScreen(cocktail: cocktail)) {
-                            VStack(alignment: .leading) {
-                                Text(cocktail.name)
-                                    .font(.headline)
-                                Text(cocktail.shortDescription)
-                                    .font(.subheadline)
+                    ForEach(cocktailVM.filteredCocktails) { cocktail in
+                        NavigationLink(destination: DetailsScreen(cocktail: cocktail, cocktailVM: cocktailVM)) {
+                            CocktailRowView(cocktail: cocktail, isFavorite: cocktailVM.isFavorite(cocktail)) {
+                                cocktailVM.toggleFavorite(cocktail)
                             }
                         }
                     }
-                }.listStyle(.plain)
+                }
+                .listStyle(.plain)
             }
             
             .navigationBarTitle("All Cocktails")
