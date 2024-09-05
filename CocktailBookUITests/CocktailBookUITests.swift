@@ -10,6 +10,18 @@ class CocktailBookUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
+        
+        // Clear UserDefaults before each test
+        clearUserDefaults()
+    }
+    
+    private func clearUserDefaults() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+        defaults.synchronize()
     }
     
     func testLoadingIndicatorAppears() throws {
@@ -36,7 +48,7 @@ class CocktailBookUITests: XCTestCase {
         segmentPicker.buttons["Alcoholic"].tap()
         XCTAssertTrue(collectionView.cells.count > 0, "Cocktails should be filtered for Alcoholic segment")
         
-        // Select "Non-Alcoholic" segment
+        // Select "Non-alcoholic" segment
         segmentPicker.buttons["Non-alcoholic"].tap()
         XCTAssertTrue(collectionView.cells.count > 0, "Cocktails should be filtered for Non-Alcoholic segment")
         
@@ -79,7 +91,7 @@ class CocktailBookUITests: XCTestCase {
         // Tap the first cocktail
         firstCocktail.tap()
         
-        // Check if the images is displayed on details screen is
+        // Check if the images is displayed on the details screen
         let detailsScreenTitle = app.scrollViews["Cocktail Details"].otherElements.images
         XCTAssertTrue(detailsScreenTitle.element.exists, "Navigated to the details screen")
     }

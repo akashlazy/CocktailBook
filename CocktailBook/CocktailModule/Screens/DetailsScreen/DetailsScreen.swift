@@ -31,8 +31,8 @@ struct DetailsScreen: View {
                     .padding(.horizontal)
                 
                 IngredientListView(ingredients: cocktail.ingredients)
-            }
-        }
+            } // MARK: - VStack
+        } // MARK: - ScrollView
         .navigationBarTitle(cocktail.name)
         .accessibility(label: Text("Cocktail Details"))
         .navigationBarItems(trailing: FavoriteButton(isFavorite: cocktailVM.isFavorite(cocktail)) {

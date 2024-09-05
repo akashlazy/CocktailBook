@@ -15,7 +15,7 @@ struct IngredientListView: View {
             HStack {
                 Image(systemName: "arrowtriangle.right.fill")
                 Text(ingredient)
-            }
+            } // MARK: - HStack
             .font(.subheadline)
         }
         .padding(.horizontal)

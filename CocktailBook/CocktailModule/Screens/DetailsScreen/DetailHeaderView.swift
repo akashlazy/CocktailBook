@@ -15,7 +15,7 @@ struct DetailHeaderView: View {
             Image(systemName: "timer")
             Text("\(cocktail.preparationMinutes) minutes")
                 .font(.headline)
-        }
+        } // MARK: - HStack
     }
 }
 

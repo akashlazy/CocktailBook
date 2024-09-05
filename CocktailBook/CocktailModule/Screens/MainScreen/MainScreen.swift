@@ -23,7 +23,7 @@ struct MainScreen: View {
                         hasLoaded = true
                     }
                 }
-        }
+        } // MARK: - NavigationView
     }
     
     // MARK: - View Components
@@ -36,7 +36,7 @@ struct MainScreen: View {
             VStack {
                 segmentPicker
                 cocktailListView
-            }
+            } // MARK: - VStack
         }
     }
     
@@ -65,7 +65,7 @@ struct MainScreen: View {
                             .accessibility(label: Text("Cocktail \(cocktail.name)"))
                         }
                     }
-                }
+                } // MARK: - List
                 .listStyle(.plain)
                 .accessibility(label: Text("Cocktail List View"))
             }
@@ -78,8 +78,14 @@ struct MainScreen: View {
             Text(errorMessage)
                 .foregroundColor(.red)
                 .accessibility(label: Text("Error message: \(errorMessage)"))
+            Button {
+                cocktailVM.fetchAllCocktails()
+            } label: {
+                Text("Retry")
+            }
+
             Spacer()
-        }
+        } // MARK: - VStack
     }
     
     // MARK: - Actions

@@ -23,11 +23,11 @@ struct CocktailRowView: View {
                         toggleFavorite()
                     }
                 }
-            }
+            } // MARK: - HStack
             Text(cocktail.shortDescription)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-        }
+        } // MARK: - VStack
     }
 }
 

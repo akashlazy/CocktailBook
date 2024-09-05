@@ -89,6 +89,7 @@ class CocktailViewModel: ObservableObject {
         updateCocktailList()
     }
     
+    // Update the list of cocktails whenever favorites change
     private func updateCocktailList() {
         sortCocktailsByName()
         reorderCocktailsByFavorites()
