@@ -17,6 +17,7 @@ struct FavoriteButton: View {
             .onTapGesture {
                 action()
             }
+            .accessibility(label: Text("Favorite"))
     }
 }
 

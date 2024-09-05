@@ -10,7 +10,7 @@ import SwiftUI
 struct MainScreen: View {
     
     @State private var selectedSegment: CocktailType = .all
-    @ObservedObject var cocktailVM = CocktailViewModel(api: FakeCocktailsAPI(withFailure: .count(1)))
+    @ObservedObject var cocktailVM = CocktailViewModel(api: FakeCocktailsAPI())
     @State private var hasLoaded = false
     
     var body: some View {
@@ -31,6 +31,7 @@ struct MainScreen: View {
     private var content: some View {
         if cocktailVM.isLoading {
             ActivityIndicator(isAnimating: $cocktailVM.isLoading)
+                .accessibility(label: Text("Loading indicator"))
         } else {
             VStack {
                 segmentPicker
@@ -47,6 +48,7 @@ struct MainScreen: View {
         }
         .pickerStyle(.segmented)
         .padding()
+        .accessibility(label: Text("Cocktail Type Picker"))
     }
     
     private var cocktailListView: some View {
@@ -60,10 +62,12 @@ struct MainScreen: View {
                             CocktailRowView(cocktail: cocktail, isFavorite: cocktailVM.isFavorite(cocktail)) {
                                 cocktailVM.toggleFavorite(cocktail)
                             }
+                            .accessibility(label: Text("Cocktail \(cocktail.name)"))
                         }
                     }
                 }
                 .listStyle(.plain)
+                .accessibility(label: Text("Cocktail List View"))
             }
         }
     }
@@ -73,6 +77,7 @@ struct MainScreen: View {
             Spacer()
             Text(errorMessage)
                 .foregroundColor(.red)
+                .accessibility(label: Text("Error message: \(errorMessage)"))
             Spacer()
         }
     }

@@ -34,6 +34,7 @@ struct DetailsScreen: View {
             }
         }
         .navigationBarTitle(cocktail.name)
+        .accessibility(label: Text("Cocktail Details"))
         .navigationBarItems(trailing: FavoriteButton(isFavorite: cocktailVM.isFavorite(cocktail)) {
             withAnimation {
                 cocktailVM.toggleFavorite(cocktail)

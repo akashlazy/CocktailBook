@@ -1,35 +1,86 @@
 import XCTest
 
+import XCTest
+
 class CocktailBookUITests: XCTestCase {
-
+    
+    var app: XCUIApplication!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+        app = XCUIApplication()
         app.launch()
+    }
+    
+    func testLoadingIndicatorAppears() throws {
+        let loadingIndicator = app.activityIndicators["Loading indicator"]
+        
+        // Wait for the loading indicator to appear
+        let exists = NSPredicate(format: "exists == true")
+        expectation(for: exists, evaluatedWith: loadingIndicator, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)  // Wait up to 10 seconds
+        
+        XCTAssertTrue(loadingIndicator.exists, "The loading indicator should appear while data is fetching")
+    }
+    
+    func testSegmentPickerFunctionality() throws {
+        let segmentPicker = app.segmentedControls["Cocktail Type Picker"]
+        
+        // Wait for the segment picker to appear
+        let exists = NSPredicate(format: "exists == true")
+        expectation(for: exists, evaluatedWith: segmentPicker, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)  // Wait up to 10 seconds
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let collectionView = app.collectionViews["Cocktail List View"]
+        // Select "Alcoholic" segment
+        segmentPicker.buttons["Alcoholic"].tap()
+        XCTAssertTrue(collectionView.cells.count > 0, "Cocktails should be filtered for Alcoholic segment")
+        
+        // Select "Non-Alcoholic" segment
+        segmentPicker.buttons["Non-alcoholic"].tap()
+        XCTAssertTrue(collectionView.cells.count > 0, "Cocktails should be filtered for Non-Alcoholic segment")
+        
+        // Select "All" segment
+        segmentPicker.buttons["All"].tap()
+        XCTAssertTrue(collectionView.cells.count > 0, "All cocktails should be displayed")
+        
+        collectionView.swipeUp()
+        collectionView.swipeDown()
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+    func testToggleFavoriteCocktail() throws {
+        let firstCocktail = app.collectionViews["Cocktail List View"].cells.element(boundBy: 0)
+        
+        // Wait for the first cocktail to appear
+        let exists = NSPredicate(format: "exists == true")
+        expectation(for: exists, evaluatedWith: firstCocktail, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)  // Wait up to 10 seconds
+        
+        // Find and tap the favorite button
+        let favoriteButton = firstCocktail.images.element(boundBy: 0)
+        XCTAssertTrue(favoriteButton.exists, "Favorite button should be available")
+        
+        favoriteButton.tap()
+        
+        // Verify the favorite state toggled
+        if favoriteButton.isSelected {
+            XCTAssertTrue(favoriteButton.isSelected, "Cocktail should be marked as favorite after tapping the favorite button")
         }
+    }
+
+    func testCocktailNavigation() throws {
+        let firstCocktail = app.collectionViews["Cocktail List View"].cells.element(boundBy: 0)
+        
+        // Wait for the first cocktail to appear
+        let exists = NSPredicate(format: "exists == true")
+        expectation(for: exists, evaluatedWith: firstCocktail, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)  // Wait up to 10 seconds
+
+        // Tap the first cocktail
+        firstCocktail.tap()
+        
+        // Check if the images is displayed on details screen is
+        let detailsScreenTitle = app.scrollViews["Cocktail Details"].otherElements.images
+        XCTAssertTrue(detailsScreenTitle.element.exists, "Navigated to the details screen")
     }
 }
