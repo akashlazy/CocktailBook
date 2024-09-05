@@ -12,7 +12,8 @@ class CocktailViewModel: ObservableObject {
     
     private let api: FakeCocktailsAPI
     private var cancellables = Set<AnyCancellable>()
-    @Published var cocktails: [Cocktail] = []
+    private var cocktails: [Cocktail] = []
+    @Published var filteredCocktails: [Cocktail] = []
     
     // MARK: - Initializer
     init(api: FakeCocktailsAPI) {
@@ -34,11 +35,27 @@ class CocktailViewModel: ObservableObject {
                 do {
                     let json = try JSONDecoder().decode([Cocktail].self, from: data)
                     self?.cocktails = json
+                    self?.filteredCocktails = json
+                    self?.updateCocktailList()
                 } catch {
                     print(error)
                 }
             })
             .store(in: &cancellables)
+    }
+    
+    // MARK: - Filtering
+    func filterCocktails(by type: CocktailType) {
+        filteredCocktails = (type == .all) ? cocktails : cocktails.filter { $0.type == type }
+        updateCocktailList()
+    }
+    
+    private func updateCocktailList() {
+        sortCocktailsByName()
+    }
+    
+    private func sortCocktailsByName() {
+        filteredCocktails.sort { $0.name < $1.name }
     }
 }
 
