@@ -10,10 +10,14 @@ import Combine
 
 class CocktailViewModel: ObservableObject {
     
-    private let api: FakeCocktailsAPI
+    // MARK: - Properties
+    private let api: CocktailsAPI
     private var cancellables = Set<AnyCancellable>()
     private var cocktails: [Cocktail] = []
+    
     @Published var filteredCocktails: [Cocktail] = []
+    @Published var isLoading = true
+    @Published var errorMessage: String?
     
     @Published var favoriteCocktails: [String] = [] {
         didSet {
@@ -22,39 +26,62 @@ class CocktailViewModel: ObservableObject {
     }
     
     // MARK: - Initializer
-    init(api: FakeCocktailsAPI) {
+    init(api: CocktailsAPI) {
         self.api = api
         loadFavorites()
     }
     
     // MARK: - API Calls
     func fetchAllCocktails() {
+        isLoading = true
         api.cocktailsPublisher
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    print("Finished Successfully")
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-                }
-            }, receiveValue: {[weak self] data in
-                do {
-                    let json = try JSONDecoder().decode([Cocktail].self, from: data)
-                    self?.cocktails = json
-                    self?.filteredCocktails = json
-                    self?.updateCocktailList()
-                } catch {
-                    print(error)
-                }
-            })
+            .sink(receiveCompletion: handleCompletion, receiveValue: handleCocktailData)
             .store(in: &cancellables)
     }
     
     // MARK: - Filtering
     func filterCocktails(by type: CocktailType) {
         filteredCocktails = (type == .all) ? cocktails : cocktails.filter { $0.type == type }
-        updateCocktailList()
+        if filteredCocktails.isEmpty && errorMessage == nil {
+            errorMessage = "No Data Available"
+        } else {
+            updateCocktailList()
+        }
+    }
+    
+    // MARK: - Favorites Handling
+    func isFavorite(_ cocktail: Cocktail) -> Bool {
+        return favoriteCocktails.contains(cocktail.id)
+    }
+    
+    func toggleFavorite(_ cocktail: Cocktail) {
+        if isFavorite(cocktail) {
+            favoriteCocktails.removeAll { $0 == cocktail.id }
+        } else {
+            favoriteCocktails.append(cocktail.id)
+        }
+    }
+    
+    // MARK: - Private Methods
+    private func handleCompletion(_ completion: Subscribers.Completion<CocktailsAPIError>) {
+        switch completion {
+        case .finished:
+            isLoading = false
+        case .failure(let error):
+            isLoading = false
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    private func handleCocktailData(_ data: Data) {
+        do {
+            cocktails = try JSONDecoder().decode([Cocktail].self, from: data)
+            filteredCocktails = cocktails
+            updateCocktailList()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
     
     private func handleFavoriteChange() {
@@ -64,6 +91,7 @@ class CocktailViewModel: ObservableObject {
     
     private func updateCocktailList() {
         sortCocktailsByName()
+        reorderCocktailsByFavorites()
     }
     
     private func saveFavorites() {
@@ -78,17 +106,10 @@ class CocktailViewModel: ObservableObject {
         filteredCocktails.sort { $0.name < $1.name }
     }
     
-    // MARK: - Favorites Handling
-    func isFavorite(_ cocktail: Cocktail) -> Bool {
-        return favoriteCocktails.contains(cocktail.id)
-    }
-    
-    func toggleFavorite(_ cocktail: Cocktail) {
-        if isFavorite(cocktail) {
-            favoriteCocktails.removeAll { $0 == cocktail.id }
-        } else {
-            favoriteCocktails.append(cocktail.id)
-        }
+    private func reorderCocktailsByFavorites() {
+        let favorite = filteredCocktails.filter { favoriteCocktails.contains($0.id) }
+        let nonFavorite = filteredCocktails.filter { !favoriteCocktails.contains($0.id) }
+        filteredCocktails = favorite + nonFavorite
     }
 }
 

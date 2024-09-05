@@ -17,6 +17,7 @@
 		636E0C062C89CCDA00A518CC /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C052C89CCDA00A518CC /* Binding+Extension.swift */; };
 		636E0C092C89D1D000A518CC /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C082C89D1D000A518CC /* FavoriteButton.swift */; };
 		636E0C0B2C89D23300A518CC /* CocktailRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C0A2C89D23300A518CC /* CocktailRowView.swift */; };
+		636E0C0E2C89FF6200A518CC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E0C0D2C89FF6200A518CC /* ActivityIndicator.swift */; };
 		E8324E7A262076EB00FD2124 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8324E79262076EB00FD2124 /* AppDelegate.swift */; };
 		E8324E7C262076EB00FD2124 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8324E7B262076EB00FD2124 /* SceneDelegate.swift */; };
 		E8324E80262076EE00FD2124 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8324E7F262076EE00FD2124 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 		636E0C052C89CCDA00A518CC /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		636E0C082C89D1D000A518CC /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		636E0C0A2C89D23300A518CC /* CocktailRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailRowView.swift; sourceTree = "<group>"; };
+		636E0C0D2C89FF6200A518CC /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		E8324E76262076EB00FD2124 /* CocktailBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CocktailBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8324E79262076EB00FD2124 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8324E7B262076EB00FD2124 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -174,9 +176,18 @@
 			path = MainScreen;
 			sourceTree = "<group>";
 		};
+		636E0C0C2C89FF2100A518CC /* UIKit+SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				636E0C0D2C89FF6200A518CC /* ActivityIndicator.swift */,
+			);
+			path = "UIKit+SwiftUI";
+			sourceTree = "<group>";
+		};
 		E8324E6D262076EB00FD2124 = {
 			isa = PBXGroup;
 			children = (
+				636E0C0C2C89FF2100A518CC /* UIKit+SwiftUI */,
 				636E0BFA2C89C80800A518CC /* AppLaunchEntry */,
 				636E0C022C89CC8C00A518CC /* Extensions */,
 				E8324EBD26207B0900FD2124 /* CocktailsAPI */,
@@ -378,6 +389,7 @@
 				636E0BF62C89C23E00A518CC /* CocktailViewModel.swift in Sources */,
 				636E0C062C89CCDA00A518CC /* Binding+Extension.swift in Sources */,
 				E8324E7C262076EB00FD2124 /* SceneDelegate.swift in Sources */,
+				636E0C0E2C89FF6200A518CC /* ActivityIndicator.swift in Sources */,
 				636E0C092C89D1D000A518CC /* FavoriteButton.swift in Sources */,
 				636E0BF32C89C23E00A518CC /* Cocktail.swift in Sources */,
 				636E0BF42C89C23E00A518CC /* DetailsScreen.swift in Sources */,
